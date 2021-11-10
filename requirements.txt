@@ -1,1 +1,3 @@
 RPi.GPIO==0.7.0
+aiocoap==0.4.1
+LinkHeader=0.4.3

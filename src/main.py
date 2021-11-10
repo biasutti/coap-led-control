@@ -1,6 +1,8 @@
 import RPi.GPIO as GPIO
 import time
 
+from src.coap.coapServer import start_coap_server
+
 LED_PIN = 23
 
 def gpio_setup():
@@ -28,6 +30,7 @@ def main():
     setup()
     test()
     print("Startup complete...")
+    start_coap_server()
 
 
 if __name__ == '__main__':
