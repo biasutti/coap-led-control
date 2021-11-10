@@ -16,6 +16,7 @@ logging.getLogger("coap-server").setLevel(logging.DEBUG)
 
 root = None
 
+# TODO: Create class object for coapServer
 def setup():
     # Resource tree creation
     global root

@@ -15,3 +15,10 @@ class LEDResource(resource.Resource):
 
         return aiocoap.Message(content_format=0,
                 payload=payload.encode('utf8'))
+
+
+    async def render_post(self, request):
+        self.led.on()
+        return aiocoap.Message(content_format=0,
+                               code=aiocoap.codes.Code.CREATED,
+                               payload="test-post".encode('utf8'))
