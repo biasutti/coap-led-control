@@ -1,35 +1,27 @@
 import RPi.GPIO as GPIO
-import time
 
-from src.coap.coapServer import start_coap_server
+from src.coap.coapServer import setup_coap_server, add_led_resource, start_coap_server
+from src.models.LED import LED
 
-LED_PIN = 23
+LED_PIN_RED = 23
 
 def gpio_setup():
     GPIO.setwarnings(False)                 # Ignore warning for now
     GPIO.setmode(GPIO.BCM)                  # use the GPIO numbers instead of the “standard” pin numbers
-    GPIO.setup(LED_PIN, GPIO.OUT)
 
 
 def setup():
     gpio_setup()
 
 
-def test():
-    for i in range(5):
-        GPIO.output(LED_PIN, GPIO.HIGH)
-        time.sleep(1)
-        GPIO.output(LED_PIN, GPIO.LOW)
-        time.sleep(1)
-
-    GPIO.cleanup()
-
-
 def main():
     print("Start main...")
     setup()
-    test()
+    led_red = LED(LED_PIN_RED)
+    led_red.test()
     print("Startup complete...")
+    setup_coap_server()
+    add_led_resource(led_red)
     start_coap_server()
 
 

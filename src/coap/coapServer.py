@@ -14,8 +14,11 @@ from src.coap.resource.examples.WhoAmIResource import WhoAmIResource
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("coap-server").setLevel(logging.DEBUG)
 
-def main():
+root = None
+
+def setup():
     # Resource tree creation
+    global root
     root = resource.Site()
 
     root.add_resource(['.well-known', 'core'], resource.WKCResource(root.get_resources_as_linkheader, None))
@@ -26,11 +29,17 @@ def main():
     root.add_resource(['examples', 'separate'], SeparateLargeResource())
     root.add_resource(['examples', 'whoami'], WhoAmIResource())
 
-    # Own resources
-    root.add_resource(['dsiot', 'led-01'], LEDResource())
 
+def add_led_resource(led):
+    # Own resources
+    global root
+    root.add_resource(['dsiot', 'led-01'], LEDResource(led))
+
+
+def start_coap_server():
     asyncio.Task(aiocoap.Context.create_server_context(root))
     asyncio.get_event_loop().run_forever()
 
-def start_coap_server():
-    main()
+
+def setup_coap_server():
+    setup()
