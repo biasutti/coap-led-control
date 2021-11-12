@@ -1,3 +1,5 @@
+import json
+
 import aiocoap
 import aiocoap.resource as resource
 
@@ -17,11 +19,25 @@ class LEDResource(resource.Resource):
                 payload=payload.encode('utf8'))
 
 
+    '''
+    default payload:
+    {
+        state: 1 or 0
+    }
+    '''
     async def render_post(self, request):
-        if self.led.power_state:
-            self.led.off()
-        else:
-            self.led.on()
+        if request.payload is not None:
+            payload = str(request.payload.decode("utf-8"))
+            #payload = '{"state": 1}'
+            data = json.loads(payload)
+            if data['state']:
+                self.led.on()
+            else:
+                self.led.off()
+
+            return aiocoap.Message(content_format=0,
+                                   code=204,
+                                   payload="test-post".encode('utf8'))
         return aiocoap.Message(content_format=0,
-                               code=204,
-                               payload="test-post".encode('utf8'))
+                               code=404,
+                               payload="test-post-error".encode('utf8'))

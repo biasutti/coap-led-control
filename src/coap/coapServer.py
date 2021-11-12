@@ -5,11 +5,11 @@ import aiocoap
 import aiocoap.resource as resource
 
 # logging setup
-from src.coap.resource.LEDResource import LEDResource
-from src.coap.resource.examples.BlockResource import BlockResource
-from src.coap.resource.examples.SeparateLargeResource import SeparateLargeResource
-from src.coap.resource.examples.TimeResource import TimeResource
-from src.coap.resource.examples.WhoAmIResource import WhoAmIResource
+from coap.resource.LEDResource import LEDResource
+from coap.resource.examples.BlockResource import BlockResource
+from coap.resource.examples.SeparateLargeResource import SeparateLargeResource
+from coap.resource.examples.TimeResource import TimeResource
+from coap.resource.examples.WhoAmIResource import WhoAmIResource
 
 logging.basicConfig(level=logging.INFO)
 logging.getLogger("coap-server").setLevel(logging.DEBUG)

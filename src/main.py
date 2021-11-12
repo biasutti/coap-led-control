@@ -1,9 +1,13 @@
+import sys
+import signal
+
 import RPi.GPIO as GPIO
 
-from src.coap.coapServer import setup_coap_server, add_led_resource, start_coap_server
-from src.models.LED import LED
+from coap.coapServer import setup_coap_server, add_led_resource, start_coap_server
+from models.LED import LED
 
 LED_PIN_RED = 23
+
 
 def gpio_setup():
     GPIO.setwarnings(False)                 # Ignore warning for now
@@ -25,5 +29,15 @@ def main():
     start_coap_server()
 
 
+def close():
+    GPIO.cleanup()
+
+
+def signal_handler(sig, frame):
+    close()
+    sys.exit(0)
+
+
 if __name__ == '__main__':
+    signal.signal(signal.SIGINT, signal_handler)
     main()
