@@ -30,4 +30,4 @@ class LED:
             self.off()
             time.sleep(1)
 
-        GPIO.cleanup()
+        #GPIO.cleanup()

@@ -18,7 +18,10 @@ class LEDResource(resource.Resource):
 
 
     async def render_post(self, request):
-        self.led.on()
+        if self.led.power_state:
+            self.led.off()
+        else:
+            self.led.on()
         return aiocoap.Message(content_format=0,
-                               code=aiocoap.codes.Code.CREATED,
+                               code=204,
                                payload="test-post".encode('utf8'))
